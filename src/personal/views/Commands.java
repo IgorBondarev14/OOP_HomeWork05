@@ -1,6 +1,7 @@
 package personal.views;
 
 public enum Commands {
+    HELP,
     NONE,
     READ,
     CREATE,

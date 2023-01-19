@@ -18,11 +18,20 @@ public class ViewUser {
         Commands com = Commands.NONE;
 
         while (true) {
-            String command = prompt("Введите команду: ");
+            String command = prompt("\n(Возможные варианты команд: NONE, HELP, CREATE, READ, LIST, " +
+                    "UPDATE, DELETE, EXIT)\nДля подробной информации выберите HELP.\n" +
+                    "Введите команду (регистр значения не имеет): ");
             com = Commands.valueOf(command.toUpperCase());
             if (com == Commands.EXIT) return;
             try {
                 switch (com) {
+                    case HELP:
+                        System.out.println("NONE   - ничего не делать\nHELP   - описание команд\n" +
+                                "CREATE - создание новой записи\nREAD   - просмотр конкретной записи (необходимо знать " +
+                                "идентификатор)\nLIST   - вывод на экран всех записей\nUPDATE - обновление конкретной " +
+                                "записи(необходимо знать идентификатор)\nDELETE - удаление конкретной записи(необходимо " +
+                                "знать идентификатор)\nEXIT   - завершение работы программы");
+                        break;
                     case CREATE:
                         String firstName = prompt("Имя: ");
                         String lastName = prompt("Фамилия: ");
@@ -43,9 +52,14 @@ public class ViewUser {
                         userController.idPresenceValidation(numId);
                         userController.updateUser(numId, createAGuy());
                         break;
+                    case DELETE:
+                        String delId = prompt("Какой контакт удалить? Введите номер ID: ");
+                        userController.idPresenceValidation(delId);
+                        userController.deleteUser(delId);
+
                 }
             } catch (Exception e) {
-                System.out.println("Oopsie!\n"+ e.getMessage()); ;
+                System.out.println("Ой!\n"+ e.getMessage()); ;
             }
         }
     }

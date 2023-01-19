@@ -4,7 +4,6 @@ import personal.model.Repository;
 import personal.model.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserController {
     private final Repository repository;
@@ -61,5 +60,9 @@ public class UserController {
                return;
         }
         throw new Exception("No such ID here");
+    }
+
+    public void deleteUser(String delId) {
+        repository.deleteUser(delId);
     }
 }

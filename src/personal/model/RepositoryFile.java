@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryFile implements Repository {
-    private UserMapper mapper = new UserMapper();
+    private SemicolonMapper mapper = new SemicolonMapper();
     private FileOperation fileOperation;
 
     public RepositoryFile(FileOperation fileOperation) {
@@ -28,7 +28,7 @@ public class RepositoryFile implements Repository {
         int max = 0;
         for (User item : users) {
             int id = Integer.parseInt(item.getId());
-            if (max < id){
+            if (max < id) {
                 max = id;
             }
         }
@@ -50,9 +50,21 @@ public class RepositoryFile implements Repository {
         writeDown(users);
     }
 
-    private void writeDown (List<User> users){
+    @Override
+    public void deleteUser(String delId) {
+        List<User> users = getAllUsers();
+        for (User u : users) {
+            if (u.getId().equals(delId)) {
+                users.remove(u);
+                break;
+            }
+        }
+        writeDown(users);
+    }
+
+    private void writeDown(List<User> users) {
         List<String> lines = new ArrayList<>();
-        for (User item: users) {
+        for (User item : users) {
             lines.add(mapper.map(item));
         }
         fileOperation.saveAllLines(lines);
